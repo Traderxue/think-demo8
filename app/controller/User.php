@@ -135,4 +135,9 @@ class User extends BaseController
         }
         return $this->result->error("删除失败");
     }
+
+    public function collect($id){
+        $list = UserModel::where("id",$id)->field("type")->select();
+        return $this->result->success("获取数据成功",$list);
+    }
 }

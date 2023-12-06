@@ -40,6 +40,8 @@ Route::group("/user",function(){
 
     Route::delete("/delete/:id","user/deleteById");     //删除用户
 
+    Route::get("/user/:id","user/collect");         //收藏
+
 });
 
 Route::group("/position",function(){
