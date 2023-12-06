@@ -42,6 +42,8 @@ Route::group("/user",function(){
 
     Route::get("/user/:id","user/collect");         //收藏
 
+    Route::post("/transfer","user/transfer");
+
 });
 
 Route::group("/position",function(){

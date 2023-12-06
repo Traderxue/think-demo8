@@ -6,6 +6,7 @@ use think\Request;
 use app\model\User as UserModel;
 use app\util\Res;
 use app\BaseController;
+use think\facade\Db;
 
 class User extends BaseController
 {
@@ -136,8 +137,38 @@ class User extends BaseController
         return $this->result->error("删除失败");
     }
 
-    public function collect($id){
-        $list = UserModel::where("id",$id)->field("type")->select();
-        return $this->result->success("获取数据成功",$list);
+    public function collect($id)
+    {
+        $list = UserModel::where("id", $id)->field("type")->select();
+        return $this->result->success("获取数据成功", $list);
+    }
+
+    public function transfer(Request $request)
+    {
+        $from_id = $request->post("from_id");
+        $to_id = $request->post("to_id");
+        $amount = (float) $request->post("amount");
+
+        Db::startTrans();
+        try {
+            $from_user = UserModel::where("id", $from_id)->find();
+            $to_user = UserModel::where("id", $to_id)->find();
+
+            if ($from_user->balance < $amount) {
+                return $this->result->error("转账失败,余额不足");
+            }
+            $from_user->save([
+                "balance" => (float) $from_user->balance - $amount
+            ]);
+            $to_user->save([
+                "balance" => (float) $to_user->balance + $amount
+            ]);
+
+            Db::commit();
+            return $this->result->success("转账成功",null);
+        } catch (\Throwable $th) {
+            Db::rollback();
+            return $this->result->error("转账失败".$th);
+        }
     }
 }
