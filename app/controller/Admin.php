@@ -17,7 +17,7 @@ class Admin extends BaseController
     }
 
     public function register(Request $request){
-        $username = $request->post("usernmae");
+        $username = $request->post("username");
         $password =password_hash($request->post("password"),PASSWORD_DEFAULT);
 
         $a = AdminModel::where('username',$username)->find();
@@ -42,6 +42,15 @@ class Admin extends BaseController
     {
         $username = $request->post("username");
         $password = $request->post('password');
-        
+
+        $admin = AdminModel::where("username",$username)->find();
+
+        if($admin==null){
+            return $this->result->error("用户名不存在");
+        }
+        if(password_verify($password,$admin->password)){
+            return $this->result->success("登录成功",$admin);
+        }
+        return $this->result->error("登录失败");
     }
 }
