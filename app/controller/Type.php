@@ -19,6 +19,13 @@ class Type extends BaseController
     public function add(Request $request)
     {
         $postData = $request->post();
+
+        $t = TypeModel::where("type",$postData["type"])->find();
+
+        if($t){
+            return $this->result->error("币种已存在");
+        }
+
         $type = new TypeModel([
             "type" => $postData["type"],
             "add_time" => date("Y-m-d H:i:s")
@@ -51,7 +58,5 @@ class Type extends BaseController
         }
         return $this->result->error("删除数据失败");
     }   
-
-    
 
 }

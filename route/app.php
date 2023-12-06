@@ -57,3 +57,13 @@ Route::group("/position",function(){
     Route::delete("/delete/:id","position/deleteById");
 
 });
+
+Route::group("/type",function(){
+
+    Route::post("/add","type/add");     //添加
+
+    Route::get("/page","type/page");            //获取
+
+    Route::delete("/delete/:id","type/delete");         //删除
+
+});
