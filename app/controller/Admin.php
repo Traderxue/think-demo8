@@ -46,11 +46,23 @@ class Admin extends BaseController
         $admin = AdminModel::where("username",$username)->find();
 
         if($admin==null){
-            return $this->result->error("用户名不存在");
+            return $this->result->error("用户不存在");
         }
         if(password_verify($password,$admin->password)){
             return $this->result->success("登录成功",$admin);
         }
         return $this->result->error("登录失败");
+    }
+
+    public function page(Request $request){
+        $page = $request->param("page");
+        $pageSize = $request->param("pageSize");
+        $username = $request->param("username");
+        $list = AdminModel::where("username","like","%{$username}%")->paginate([
+            "page"=>$page,
+            "list_rows"=>$pageSize
+        ]);
+
+        return $this->result->success("获取数据成功",$list);
     }
 }
