@@ -41,3 +41,17 @@ Route::group("/user",function(){
     Route::delete("/delete/:id","user/deleteById");     //删除用户
 
 });
+
+Route::group("/position",function(){
+
+    Route::post("/open","position/open");   //参数 u_id,type,buy_price,amount,direction
+
+    Route::post("/close","position/close");         //id, close_price
+
+    Route::get("/page","position/page");
+
+    Route::get("/get/:id","position/getByUid");
+
+    Route::delete("/delete/:id","position/deleteById");
+
+});
