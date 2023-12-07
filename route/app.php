@@ -69,5 +69,12 @@ Route::group("/type",function(){
     Route::delete("/delete/:id","type/delete");         //删除
 
     //添加 获取 删除
+});
+
+Route::group("/sign",function(){
+
+    Route::get("/add","sign/add");
+
+    Route::get("/get/:date","sign/getByDate");
 
 });
