@@ -93,7 +93,7 @@ class User extends BaseController
         }
     }
 
-    public function verify(Request $request)
+    public function verify(Request $request)        //实名认证
     {
         $id = $request->post("id");
         $name = $request->post("name");
@@ -114,7 +114,7 @@ class User extends BaseController
         return $this->result->error("提交失败");
     }
 
-    public function pass(Request $request)
+    public function pass(Request $request)      //审核
     {
         $id = $request->post("id");
         $user = UserModel::where("id", $id)->find();

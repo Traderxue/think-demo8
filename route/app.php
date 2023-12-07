@@ -68,4 +68,6 @@ Route::group("/type",function(){
 
     Route::delete("/delete/:id","type/delete");         //删除
 
+    //添加 获取 删除
+
 });
