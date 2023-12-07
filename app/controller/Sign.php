@@ -25,9 +25,13 @@ class Sign extends BaseController{
 
         $sign = new SignModel([
             "u_id"=>$postData["u_id"],
-            "sign_data"=>date("Y-m-d"),
+            "sign_date"=>date("Y-m-d H:i:s"),
             "sign"=>1
         ]);
+        $res = $sign->save();
+        if(!$res){
+            return $this->result->error("签到失败");
+        }
         return $this->result->success("签到成功",$sign);
     }
 

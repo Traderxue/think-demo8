@@ -73,8 +73,14 @@ Route::group("/type",function(){
 
 Route::group("/sign",function(){
 
-    Route::get("/add","sign/add");
+    Route::post("/add","sign/add");         //u_id,amount
 
     Route::get("/get/:date","sign/getByDate");
+
+});
+
+Route::group("/kefu",function(){
+
+    Route::post("/edit","kefu/edit");
 
 });
